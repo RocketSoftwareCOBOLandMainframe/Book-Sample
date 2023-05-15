@@ -1,0 +1,15 @@
+@root
+
+[*.cbl]
+# Build directives
+errformat(3)
+cobidy(obj/)
+int(obj/)
+
+# Compile directives
+anim
+copypath(${root.dir}cpy)
+sourceformat(variable)
+nobound
+odoslide
+change-message"CH1209 N"
