@@ -1,0 +1,12 @@
+root = true
+
+[*.cbl]
+mf_cobol_data_base_indent = 0
+mf_cobol_data_indent = 4
+mf_cobol_data_name_indent = 0
+mf_cobol_data_name_top_indent = 4
+mf_cobol_data_relation = parent_level_number
+mf_cobol_data_clause_alignment = match_previous
+
+mf_cobol_evaluate_indent = 0
+mf_cobol_evaluate_when_indent = 4

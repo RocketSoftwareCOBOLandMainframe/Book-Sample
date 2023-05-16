@@ -1,12 +1,14 @@
 @root
 
-[*.cbl]
 # Build directives
+[*.{cbl,int,gnt}]
+int(obj/)
+obj(obj/)
 errformat(3)
 cobidy(obj/)
-int(obj/)
 
 # Compile directives
+[*.cbl]
 anim
 copypath(${root.dir}cpy)
 sourceformat(variable)
