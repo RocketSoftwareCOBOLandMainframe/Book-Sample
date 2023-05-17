@@ -39,7 +39,7 @@
        01  ws-temp                 binary-long.
 
       **** The book storage
-       copy book-rec replacing ==(prefix)== by ==ws-book==.
+       copy "book-rec.cpy" replacing ==(prefix)== by ==ws-book==.
 
       **** Data for calling the book program
        01  ws-function             pic x.
