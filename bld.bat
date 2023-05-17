@@ -1,5 +1,5 @@
 @echo off
-set COBOL_ARGS=nologo stderr
+set COBOL_ARGS=nologo stderr anim
 
 rd /s/q bin obj 2> nul
 md bin obj

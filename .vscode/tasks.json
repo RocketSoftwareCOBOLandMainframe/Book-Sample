@@ -6,7 +6,12 @@
         {
             "label": "build",
             "type": "COBOL-shell",
-            "command": "make"
+            "windows": {
+                "command": "bld.bat"
+            },
+            "linux": {
+                "command": "make"
+            }
         }
     ]
 }
