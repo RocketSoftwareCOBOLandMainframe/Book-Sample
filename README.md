@@ -48,6 +48,7 @@ Below are some exercises that you are welcome to follow that can help you become
 
 * Fix a bug that prevents the `-f` option from working correctly.
 * Display the genre of the books when executing the `list` command.
+* Refactor shared data items and constants between cli and book (e.g. `ws-function`, and `ws-file-status`) to a copybook that is included by both programs.
 * Refactor the sample to use local variables and parameterised sections.
 
 ## ⚖️ License

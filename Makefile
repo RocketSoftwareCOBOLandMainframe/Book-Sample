@@ -9,7 +9,7 @@ clean:
 
 obj/%.o: src/%.cbl $(COPYBOOKS)
 	@mkdir -p obj
-	@cob -x -c $< -C "int(obj/)" -o obj/
+	@cob -xg -c $< -C "int(obj/)" -o obj/
 
 bin/book: $(OBJECTS)
 	@mkdir -p bin

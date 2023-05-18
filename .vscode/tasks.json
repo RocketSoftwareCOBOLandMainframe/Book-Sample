@@ -6,6 +6,11 @@
         {
             "label": "build",
             "type": "COBOL-shell",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "windows": {
                 "command": "bld.bat"
             },

@@ -20,6 +20,7 @@
            03 ws-arg-buffer        pic x(64).
 
        01  ws-main-arg-index       pic xx comp-5 value 0.
+       01  ws-pending-option-value pic x value x'00'.
        01  ws-error                bool-t value 78-false.
        01  ws-show-help            bool-t value 78-true.
        01  ws-command              pic x.
@@ -30,7 +31,9 @@
            78 78-err-text-unexpected-arg   value "invalid argument".
            78 78-err-text-not-enough-args  value "not enough arguments supplied".
            78 78-err-text-unknown-command  value "unknown command".
+           78 78-err-text-unknown-option   value "unknown option".
 
+       01  ws-book-filename        pic x(260).
        01  ws-add-book-title       pic x(50).
        01  ws-add-book-type        pic x(20).
        01  ws-add-book-author      pic x(50).
@@ -58,7 +61,7 @@
 
        01  ws-formatted-book.
            03 ws-formatted-book-stockno    pic xxxx.
-           03                              value ' '.
+           03                              value " ".
            03 ws-formatted-book-name       pic x(30).
            03 ws-formatted-book-author     pic x(20).
            03                              value "$".
@@ -75,27 +78,29 @@
            evaluate true
            when ws-show-help <> 78-false
                perform show-help
+               goback returning 1
            when ws-error = 78-false
                perform execute-command
            when other
            end-evaluate
            if ws-error <> 78-false
-               display ws-error-text
+               display function trim (ws-error-text trailing)
+               goback returning 2
            end-if
-           goback
+           goback returning 0
            .
 
        show-help section.
-           display 'A Micro Focus COBOL sample for performing ACID operations on'
-           display 'a book repository using standard COBOL file handling.'
-           display ' '
-           display 'usage: book <command> [<args>] [-f <path>]'
-           display '       book list'
-           display '       book add <title> <author> <genre>'
-           display '       book delete <id>'
-           display ' '
-           display 'options:'
-           display '  -f <path>          Path of the book storage file.'
+           display "A Micro Focus COBOL sample for performing ACID operations on"
+           display "a book repository using standard COBOL file handling."
+           display " "
+           display "usage: book <command> [<args>] [-f <path>]"
+           display "       book list"
+           display "       book add <title> <author> <genre>"
+           display "       book delete <id>"
+           display " "
+           display "options:"
+           display "  -f <path>          Path of the book storage file."
            .
 
        process-arguments section.
@@ -114,7 +119,8 @@
                        end-perform
                        move ws-cmdline-buffer(2:ws-arg-len) to ws-arg-buffer
                    else
-                       inspect ws-cmdline-buffer tallying ws-arg-len for characters before ' '
+                       inspect ws-cmdline-buffer tallying ws-arg-len for trailing " "
+                       compute ws-arg-len = length of ws-cmdline-buffer - ws-arg-len
                        move ws-cmdline-buffer(1:ws-arg-len) to ws-arg-buffer
                    end-if
                    perform process-argument
@@ -126,57 +132,83 @@
            if ws-arg-len = 0
                exit section
            end-if
-           if ws-arg-buffer(1:1) = '-'
+
+           evaluate true
+           when ws-pending-option-value <> x"00"
+               perform process-option-value
+           when ws-arg-buffer(1:1) = "-"
                *> Option
-           else
-               if ws-main-arg-index = 0
-                   evaluate ws-arg-buffer
-                   when 'list'
-                       move 78-command-list to ws-command
-                   when 'add'
-                       move 78-command-add to ws-command
-                   when 'delete'
-                       move 78-command-delete to ws-command
-                   when other
-                       move 78-err-text-unknown-command to ws-error-text
-                       move 78-true to ws-error
-                   end-evaluate
-                   move 78-false to ws-show-help
-               else
-                   evaluate ws-command
-                   when 78-command-add
-                       evaluate ws-main-arg-index
-                       when 1
-                           move ws-arg-buffer to ws-add-book-title
-                       when 2
-                           move ws-arg-buffer to ws-add-book-author
-                       when 3
-                           move ws-arg-buffer to ws-add-book-type
-                       when other
-                           move 78-err-text-unexpected-arg to ws-error-text
-                           move 78-true to ws-error
-                       end-evaluate
-                   when 78-command-delete
-                       if ws-main-arg-index = 1
-                           if function length (function trim (ws-arg-buffer trailing)) <> 4
-                               move 'invalid book id' to ws-error-text
-                               move 78-true to ws-error
-                           else
-                               move ws-arg-buffer to ws-book-stockno
-                           end-if
-                       else
-                           move 78-err-text-unexpected-arg to ws-error-text
-                           move 78-true to ws-error
-                       end-if
-                   end-evaluate
-               end-if
+               evaluate ws-arg-buffer
+               when "-f"
+                   move ws-arg-buffer(2:1) to ws-pending-option-value
+               when other
+                   move 78-err-text-unknown-option to ws-error-text
+                   move 78-true to ws-error
+               end-evaluate
+           when ws-main-arg-index = 0
+               perform process-command-name-arg
                add 1 to ws-main-arg-index
-           end-if
+           when other
+               perform process-command-arg
+               add 1 to ws-main-arg-index
+           end-evaluate
+           .
+
+       process-option-value section.
+           evaluate ws-pending-option-value
+           when "f"
+               move ws-arg-buffer to ws-book-filename
+           end-evaluate
+           move x"00" to ws-pending-option-value
+           .
+
+       process-command-name-arg section.
+           evaluate ws-arg-buffer
+           when "list"
+               move 78-command-list to ws-command
+           when "add"
+               move 78-command-add to ws-command
+           when "delete"
+               move 78-command-delete to ws-command
+           when other
+               move 78-err-text-unknown-command to ws-error-text
+               move 78-true to ws-error
+           end-evaluate
+           move 78-false to ws-show-help
+           .
+
+       process-command-arg section.
+           evaluate ws-command
+           when 78-command-add
+               evaluate ws-main-arg-index
+               when 1
+                   move ws-arg-buffer to ws-add-book-title
+               when 2
+                   move ws-arg-buffer to ws-add-book-author
+               when 3
+                   move ws-arg-buffer to ws-add-book-type
+               when other
+                   move 78-err-text-unexpected-arg to ws-error-text
+                   move 78-true to ws-error
+               end-evaluate
+           when 78-command-delete
+               if ws-main-arg-index = 1
+                   if function length (function trim (ws-arg-buffer trailing)) <> 4
+                       move "invalid book id" to ws-error-text
+                       move 78-true to ws-error
+                   else
+                       move ws-arg-buffer to ws-book-stockno
+                   end-if
+               else
+                   move 78-err-text-unexpected-arg to ws-error-text
+                   move 78-true to ws-error
+               end-if
+           end-evaluate
            .
 
        execute-command section.
-           display "bookfile" upon environment-name
-           display "bookfile.dat" upon environment-value
+           display "BOOKFILE" upon environment-name
+           display "books" upon environment-value
            evaluate ws-command
            when 78-command-add
                perform add-book
@@ -210,12 +242,11 @@
                end-if
            end-perform
            if ws-book-count = 0
-               move 78-true to ws-error
-               move 'No books exist' to ws-error-text
+               display "No books exist"
            end-if
            display ws-formatted-book-rule
            move ws-book-count to ws-formatted-number
-           display 'Total books: ' function trim (ws-formatted-number)
+           display "Total books: " function trim (ws-formatted-number)
            .
 
        add-book section.
@@ -237,11 +268,11 @@
 
            set add-record to true
            perform call-book
-           if ws-file-status = '00' or ws-file-status = "02"
-               display 'Added ' function trim (ws-add-book-title) " by " function trim (ws-add-book-author)
+           if ws-file-status = "00" or ws-file-status = "02"
+               display "Added " function trim (ws-add-book-title) " by " function trim (ws-add-book-author)
            else
                move 78-true to ws-error
-               move 'Failed to add book' to ws-error-text
+               move "Failed to add book" to ws-error-text
            end-if
            .
 
@@ -255,7 +286,7 @@
            perform call-book
            set delete-record to true
            perform call-book
-           display 'Deleted ' function trim (ws-book-title) " by " function trim (ws-book-author)
+           display "Deleted " function trim (ws-book-title) " by " function trim (ws-book-author)
            .
 
        find-next-stockid section.
