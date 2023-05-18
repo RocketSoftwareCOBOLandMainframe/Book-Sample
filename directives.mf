@@ -2,6 +2,7 @@
 
 # Build directives
 [*.{cbl,int,gnt}]
+anim
 int(obj/)
 obj(obj/)
 errformat(3)
@@ -9,7 +10,6 @@ cobidy(obj/)
 
 # Compile directives
 [*.cbl]
-anim
 copypath(${root.dir}cpy)
 sourceformat(variable)
 nobound
