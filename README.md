@@ -17,7 +17,8 @@ The sample is structured as follows:
 * `bin/` - Directory where the application binary is written to.
 * `.vscode/tasks.json` - Configuration for building the sample within vscode.
 * `.vscode/launch.json` - Configuration for running and debugging the sample within vscode.
-* `add-books.bat` - Script that adds sample data to the book repository.
+* `add-books.bat` - Windows batch script that adds sample data to the book repository.
+* `add-books.sh` - Unix shell script that adds sample data to the book repository.
 
 ## ⚡ Running the Sample
 
@@ -31,6 +32,7 @@ The sample is structured as follows:
 2. Navigate to the root directory for this sample.
 3. Execute `bld.bat` to build the sample.
 4. Execute `bin\book.exe` to run the sample.
+5. Execute `.\add-books.bat` to add some sample data to the book repository.
 
 ### Command line (Linux)
 1. Setup a devhub environment. Typically this would be done as follows:
@@ -41,7 +43,8 @@ The sample is structured as follows:
 
 2. Navigate to the root directory for this sample.
 3. Execute `make` to build the sample.
-4. Execute `bin\book` to run the sample.
+4. Execute `bin/book` to run the sample.
+5. Execute `./add-books.sh` to add some sample data to the book repository.
 
 ## 📋 Exercises
 Below are some exercises that you are welcome to follow that can help you become more familiar with the Micro Focus COBOL tooling and language.

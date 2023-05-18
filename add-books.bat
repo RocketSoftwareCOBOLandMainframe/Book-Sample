@@ -1,3 +1,4 @@
+@echo off
 set BOOK_EXE=bin\book.exe
 %BOOK_EXE% add "THE LORD OF THE RINGS" "TOLKIEN" "FANTASY"
 %BOOK_EXE% add "OLIVER TWIST" "DICKENS" "SERIAL"
