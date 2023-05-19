@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "COBOL (native): Launch",
             "program": "${workspaceFolder}/bin/book",
-            "args": [ "list", "-f", "dog.dat" ],
+            "args": [ "list" ],
             "cwd": "${workspaceFolder}",
             "symbolSearchPaths": [
                 "${workspaceFolder}/obj"

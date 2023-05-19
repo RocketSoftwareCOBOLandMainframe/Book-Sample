@@ -12,10 +12,12 @@
                 "isDefault": true
             },
             "windows": {
-                "command": "bld.bat"
+                "command": "${workspaceFolder}/bld.bat",
+                "is64bit": true
             },
             "linux": {
-                "command": "make"
+                "command": "make",
+                "is64bit": true
             }
         }
     ]
