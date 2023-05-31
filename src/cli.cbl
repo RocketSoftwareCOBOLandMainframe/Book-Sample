@@ -207,7 +207,7 @@
            .
 
        execute-command section.
-           display "BOOKFILE" upon environment-name
+           display "dd_BOOKFILE" upon environment-name
            display "books.dat" upon environment-value
            evaluate ws-command
            when 78-command-add
