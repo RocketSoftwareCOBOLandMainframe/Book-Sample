@@ -1,6 +1,6 @@
       ******************************************************************
       *
-      * (C) Copyright 2023 Micro Focus or one of its affiliates.
+      * (C) Copyright 2023-2024 Rocket Software, Inc. or one of its affiliates. All Rights Reserved.
       *
       * This sample code is supplied for demonstration purposes only
       * on an "as is" basis and is for use at your own risk.
@@ -91,7 +91,7 @@
            .
 
        show-help section.
-           display "A Micro Focus COBOL sample for performing ACID operations on"
+           display "A Rocket Visual COBOL sample for performing ACID operations on"
            display "a book repository using standard COBOL file handling."
            display " "
            display "usage: book <command> [<args>] [-f <path>]"

@@ -29,7 +29,7 @@ The sample is structured as follows:
 1. Open the folder in Visual Studio Code.
 2. Press F5, or Run -> Start Debugging to run the application.
 3. You can debug the code by inserting a breakpoint and running the application.
-4. To add a set of sample books, open a Micro Focus COBOL terminal and run `.\add-books.bat` (Windows) or `./add-books.sh` (Linux).
+4. To add a set of sample books, open a Rocket® Visual COBOL® terminal and run `.\add-books.bat` (Windows) or `./add-books.sh` (Linux).
 
 ### Command line (Windows)
 
@@ -54,7 +54,7 @@ The sample is structured as follows:
 
 ## 📋 Exercises
 
-Below are some exercises that you are welcome to follow that can help you become more familiar with the Micro Focus COBOL tooling and language.
+Below are some exercises that you are welcome to follow that can help you become more familiar with the Rocket® Visual COBOL® tooling and language.
 
 * Fix a bug that prevents the `-f` option from working correctly.
 * Display the genre of the books when executing the `list` command.
@@ -63,17 +63,17 @@ Below are some exercises that you are welcome to follow that can help you become
 
 ## ⚖️ License
 
-Copyright (C) 2023 Micro Focus. All Rights Reserved.
+Copyright 2023-2024 Rocket Software, Inc. or its affiliates.
 This software may be used, modified, and distributed
 (provided this notice is included without modification)
 solely for internal demonstration purposes with other
-Micro Focus software, and is otherwise subject to the EULA at
-<https://www.microfocus.com/en-us/legal/software-licensing>.
+Rocket® products, and is otherwise subject to the EULA at
+https://www.rocketsoftware.com/company/trust/agreements.
 
 THIS SOFTWARE IS PROVIDED "AS IS" AND ALL IMPLIED
 WARRANTIES, INCLUDING THE IMPLIED WARRANTIES OF
 MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE,
 SHALL NOT APPLY.
 TO THE EXTENT PERMITTED BY LAW, IN NO EVENT WILL
-MICRO FOCUS HAVE ANY LIABILITY WHATSOEVER IN CONNECTION
+ROCKET SOFTWARE HAVE ANY LIABILITY WHATSOEVER IN CONNECTION
 WITH THIS SOFTWARE.
